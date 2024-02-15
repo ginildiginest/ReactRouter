@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter } from "react-router-dom";
+import Home from "./Home";
+import Error from "./Error";
+import { Root, loader as rootLoaders } from "./routes/root";
+import Contact from "./contact/Contact";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+export const router = createBrowserRouter([
+  // {
+  //   path: "/",
+  //   element: <Home />,
+  //   errorElement: <Error />,
+  //   loader: async ({ request }) => {
+  //     const res = await fetch('https://fakestoreapi.com/products');
+  //     const user = await res.json();
+  //     return user;
+  //   }
+  {
+    path: "/",
+    element: <Root/>,
+    errorElement: <Error />,
+    loader: rootLoaders,
+    children: [
+      {
+        path: "contacts/:contactId",
+        element: <Contact />,
+      },
+    ],
+  },
+  
+]);
